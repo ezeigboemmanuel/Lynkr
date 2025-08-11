@@ -1,0 +1,192 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap');
+
+@import "tailwindcss";
+
+/* Tailwind v4 Theme Mapping */
+@theme {
+  --font-mono: 'JetBrains Mono', 'Consolas', 'Monaco', 'Courier New', monospace;
+
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+
+  --color-sidebar: hsl(var(--sidebar-background));
+  --color-sidebar-foreground: hsl(var(--sidebar-foreground));
+  --color-sidebar-primary: hsl(var(--sidebar-primary));
+  --color-sidebar-primary-foreground: hsl(var(--sidebar-primary-foreground));
+  --color-sidebar-accent: hsl(var(--sidebar-accent));
+  --color-sidebar-accent-foreground: hsl(var(--sidebar-accent-foreground));
+  --color-sidebar-border: hsl(var(--sidebar-border));
+  --color-sidebar-ring: hsl(var(--sidebar-ring));
+
+  --color-terminal-prompt: hsl(var(--terminal-prompt));
+  --color-terminal-comment: hsl(var(--terminal-comment));
+  --color-terminal-string: hsl(var(--terminal-string));
+  --color-terminal-keyword: hsl(var(--terminal-keyword));
+  --color-terminal-number: hsl(var(--terminal-number));
+  --color-terminal-operator: hsl(var(--terminal-operator));
+  --color-terminal-accent: hsl(var(--terminal-accent));
+  --color-terminal-bg: hsl(var(--terminal-bg));
+  --color-terminal-text: hsl(var(--terminal-text));
+  --color-terminal-input: hsl(var(--terminal-input));
+  --color-terminal-border: hsl(var(--terminal-border));
+}
+
+:root {
+  --background: 210 11% 11%;
+  --foreground: 0 0% 83%;
+  --card: 210 11% 15%;
+  --card-foreground: 0 0% 83%;
+  --popover: 210 11% 15%;
+  --popover-foreground: 0 0% 83%;
+  --primary: 142 100% 50%;
+  --primary-foreground: 210 11% 11%;
+  --secondary: 210 11% 21%;
+  --secondary-foreground: 0 0% 83%;
+  --muted: 210 11% 18%;
+  --muted-foreground: 0 0% 60%;
+  --accent: 39 100% 50%;
+  --accent-foreground: 210 11% 11%;
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 0 0% 98%;
+  --border: 210 11% 21%;
+  --input: 210 11% 18%;
+  --ring: 142 100% 50%;
+  --radius: 0.25rem;
+
+  --sidebar-background: 210 11% 15%;
+  --sidebar-foreground: 0 0% 83%;
+  --sidebar-primary: 142 100% 50%;
+  --sidebar-primary-foreground: 210 11% 11%;
+  --sidebar-accent: 210 11% 21%;
+  --sidebar-accent-foreground: 0 0% 83%;
+  --sidebar-border: 210 11% 21%;
+  --sidebar-ring: 142 100% 50%;
+
+  --terminal-bg: 210 11% 11%;
+  --terminal-text: 0 0% 83%;
+  --terminal-input: 210 11% 15%;
+  --terminal-border: 210 11% 21%;
+  --terminal-prompt: 142 100% 50%;
+  --terminal-comment: 0 0% 60%;
+  --terminal-string: 39 100% 70%;
+  --terminal-keyword: 214 100% 70%;
+  --terminal-number: 142 100% 50%;
+  --terminal-operator: 0 0% 83%;
+  --terminal-accent: 142 100% 50%;
+}
+
+html {
+  color-scheme: dark;
+}
+
+* {
+  @apply border-border;
+}
+
+body {
+  @apply bg-background text-foreground font-mono;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  @apply bg-muted;
+}
+::-webkit-scrollbar-thumb {
+  @apply bg-muted-foreground/30 rounded;
+}
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-muted-foreground/50;
+}
+
+/* Terminal cursor */
+.terminal-cursor {
+  caret-color: white;
+}
+.terminal-cursor::after {
+  content: '';
+  display: inline-block;
+  width: 0.5em;
+  height: 1.2em;
+  background-color: hsl(var(--terminal-keyword));
+  margin-left: 1px;
+  animation: blink 1s infinite;
+}
+
+/* Animations */
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+@keyframes glow {
+  0%, 100% { 
+    box-shadow: 0 0 5px hsl(var(--primary) / 0.3);
+  }
+  50% { 
+    box-shadow: 0 0 20px hsl(var(--primary) / 0.6), 0 0 30px hsl(var(--primary) / 0.4);
+  }
+}
+
+/* Utilities */
+@utility glow-primary {
+  animation: glow 2s ease-in-out infinite;
+}
+@utility text-terminal-prompt {
+  color: hsl(var(--terminal-prompt));
+}
+@utility text-terminal-comment {
+  color: hsl(var(--terminal-comment));
+}
+@utility text-terminal-string {
+  color: hsl(var(--terminal-string));
+}
+@utility text-terminal-keyword {
+  color: hsl(var(--terminal-keyword));
+}
+@utility text-terminal-number {
+  color: hsl(var(--terminal-number));
+}
+@utility text-terminal-operator {
+  color: hsl(var(--terminal-operator));
+}
+@utility bg-terminal-bg {
+  background-color: hsl(var(--terminal-bg));
+}
+@utility bg-terminal-input {
+  background-color: hsl(var(--terminal-input));
+}
+@utility border-terminal-border {
+  border-color: hsl(var(--terminal-border));
+}
+@utility text-terminal-text {
+  color: hsl(var(--terminal-text));
+}
+@utility bg-terminal-accent {
+  background-color: hsl(var(--terminal-accent));
+}
