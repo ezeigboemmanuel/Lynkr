@@ -7,6 +7,13 @@ interface IUser extends Document {
   password: string;
   createdAt: Date;
   updatedAt: Date;
+
+  // Add this ones during edit profile
+  profileImg: string;
+  bio: string;
+  location: string;
+  github: string;
+  website: string;
 }
 
 // 2. Create the Mongoose schema corresponding to the document interface
@@ -15,6 +22,11 @@ const UserSchema: Schema<IUser> = new Schema(
     username: { type: String, required: true, unique: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
+    profileImg: String,
+    bio: String,
+    location: String,
+    github: String,
+    website: String,
   },
   { timestamps: true }
 );
