@@ -5,6 +5,7 @@ import cookieParser from "cookie-parser";
 import authRouter from "./routes/auth.route.js";
 import { connectToDB } from "./lib/connectToDB.js";
 import usersRouter from "./routes/users.route.js";
+import chatsRouter from "./routes/chats.route.js";
 
 dotenv.config();
 
@@ -18,7 +19,7 @@ app.use(cookieParser());
 
 app.use("/api/auth", authRouter);
 app.use("/api/users", usersRouter);
-// app.use("/api/messages", messageRouter);
+app.use("/api/chats", chatsRouter);
 
 app.listen(PORT, () => {
   console.log("Server started at port", PORT);
