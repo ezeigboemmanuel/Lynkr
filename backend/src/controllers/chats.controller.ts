@@ -84,3 +84,64 @@ export const getOneToOneMessages = async (req: Request, res: Response) => {
     }
   }
 };
+
+export const sendGroupMessage = async (req: Request, res: Response) => {
+  try {
+    const { content } = req.body;
+    const { groupName } = req.params;
+    const myId = req.user._id;
+
+    if (!groupName) {
+      return res.status(400).json({ message: "Invalid group name" });
+    }
+
+    // Check if it's one of your predefined groups
+    const allowedGroups = ["main", "random", "help"];
+    if (!allowedGroups.includes(groupName)) {
+      return res.status(400).json({ message: "Invalid group name" });
+    }
+
+    const message = await Message.create({
+      groupName,
+      sender: myId,
+      content,
+    });
+
+    return res.status(201).json(message);
+  } catch (error) {
+    if (error instanceof Error) {
+      console.log("Error in sendGroupMessage controller: ", error.message);
+      return res.status(500).json({ message: "Internal Server Error" });
+    } else {
+      console.log("Unknown error in sendGroupMessage controller: ", error);
+    }
+  }
+};
+
+export const getGroupMessages = async (req: Request, res: Response) => {
+  try {
+    const { groupName } = req.params;
+
+    if (!groupName) {
+      return res.status(400).json({ message: "Invalid group name" });
+    }
+
+    const allowedGroups = ["main", "random", "help"];
+    if (!allowedGroups.includes(groupName)) {
+      return res.status(400).json({ message: "Invalid group name" });
+    }
+
+    const messages = await Message.find({ groupName })
+      .populate("sender", "username email")
+      .sort({ createdAt: 1 });
+
+    return res.json(messages);
+  } catch (error) {
+    if (error instanceof Error) {
+      console.log("Error in getGroupMessage controller: ", error.message);
+      return res.status(500).json({ message: "Internal Server Error" });
+    } else {
+      console.log("Unknown error in getGroupMessage controller: ", error);
+    }
+  }
+};
