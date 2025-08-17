@@ -1,33 +1,28 @@
 import { useState } from "react";
-import { useNavigate, Link } from "react-router";
+import { Link } from "react-router";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { toast } from "sonner";
+import { useUserStore } from "@/store/useUserStore";
 
 const Signup = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const navigate = useNavigate();
+
+  const { isSigningUp, signup } = useUserStore();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (password !== confirmPassword) {
-      alert("Passwords don't match!");
+      toast.error("Passwords don't match!");
       return;
     }
 
-    setIsLoading(true);
-    
-    // Simulate signup process
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    // For demo purposes, just navigate to main chat
-    navigate("/");
-    setIsLoading(false);
+    await signup({ username, email, password });
   };
 
   return (
@@ -39,7 +34,9 @@ const Signup = () => {
             <div className="w-3 h-3 rounded-full bg-destructive"></div>
             <div className="w-3 h-3 rounded-full bg-accent"></div>
             <div className="w-3 h-3 rounded-full bg-primary"></div>
-            <span className="ml-2 text-terminal-comment text-sm font-mono">~/signup</span>
+            <span className="ml-2 text-terminal-comment text-sm font-mono">
+              ~/signup
+            </span>
           </div>
 
           {/* Signup Form */}
@@ -55,7 +52,10 @@ const Signup = () => {
 
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="username" className="text-terminal-text font-mono">
+                <Label
+                  htmlFor="username"
+                  className="text-terminal-text font-mono"
+                >
                   --username
                 </Label>
                 <Input
@@ -85,7 +85,10 @@ const Signup = () => {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="password" className="text-terminal-text font-mono">
+                <Label
+                  htmlFor="password"
+                  className="text-terminal-text font-mono"
+                >
                   --password
                 </Label>
                 <Input
@@ -100,7 +103,10 @@ const Signup = () => {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="confirmPassword" className="text-terminal-text font-mono">
+                <Label
+                  htmlFor="confirmPassword"
+                  className="text-terminal-text font-mono"
+                >
                   --confirm-password
                 </Label>
                 <Input
@@ -117,17 +123,17 @@ const Signup = () => {
               <Button
                 type="submit"
                 className="w-full bg-primary text-primary-foreground hover:bg-primary/90 font-mono"
-                disabled={isLoading}
+                disabled={isSigningUp}
               >
-                {isLoading ? "$ creating account..." : "$ execute signup"}
+                {isSigningUp ? "$ creating account..." : "$ execute signup"}
               </Button>
             </form>
 
             <div className="text-center pt-4 border-t border-terminal-border">
               <p className="text-terminal-comment font-mono text-sm">
                 # Already have an account?{" "}
-                <Link 
-                  to="/login" 
+                <Link
+                  to="/login"
                   className="text-primary hover:text-primary/80 underline"
                 >
                   ./login.sh

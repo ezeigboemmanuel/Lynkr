@@ -10,9 +10,9 @@ export function ChatLayout({ children }: ChatLayoutProps) {
   return (
     <>
       <ChatSidebar />
-      <div className="flex flex-col flex-1">
+      <div className="flex flex-col flex-1 max-h-[100vh]">
         <ChatHeader />
-        <main className="flex-1">{children}</main>
+        <main className="flex-1 min-h-0">{children}</main>
       </div>
     </>
   );

@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useParams } from "react-router";
 import { ChatArea } from "@/components/ChatArea";
-import { ChatHeader } from "@/components/ChatHeader";
 
 interface Message {
   id: string;
@@ -90,7 +89,6 @@ export default function PrivateChat() {
 
   return (
     <div className="flex-1 flex flex-col h-screen bg-background">
-      <ChatHeader />
       <ChatArea
         messages={messages}
         onSendMessage={handleSendMessage}

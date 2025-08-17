@@ -1,25 +1,20 @@
 import { useState } from "react";
-import { useNavigate, Link } from "react-router";
+import { Link } from "react-router";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useUserStore } from "@/store/useUserStore";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const navigate = useNavigate();
+
+  const { isLoggingIn, login } = useUserStore();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsLoading(true);
-    
-    // Simulate login process
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    // For demo purposes, just navigate to main chat
-    navigate("/");
-    setIsLoading(false);
+
+    await login({ email, password });
   };
 
   return (
@@ -31,7 +26,9 @@ const Login = () => {
             <div className="w-3 h-3 rounded-full bg-destructive"></div>
             <div className="w-3 h-3 rounded-full bg-accent"></div>
             <div className="w-3 h-3 rounded-full bg-primary"></div>
-            <span className="ml-2 text-terminal-comment text-sm font-mono">~/login</span>
+            <span className="ml-2 text-terminal-comment text-sm font-mono">
+              ~/login
+            </span>
           </div>
 
           {/* Login Form */}
@@ -62,7 +59,10 @@ const Login = () => {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="password" className="text-terminal-text font-mono">
+                <Label
+                  htmlFor="password"
+                  className="text-terminal-text font-mono"
+                >
                   --password
                 </Label>
                 <Input
@@ -79,17 +79,17 @@ const Login = () => {
               <Button
                 type="submit"
                 className="w-full bg-primary text-primary-foreground hover:bg-primary/90 font-mono"
-                disabled={isLoading}
+                disabled={isLoggingIn}
               >
-                {isLoading ? "$ authenticating..." : "$ execute login"}
+                {isLoggingIn ? "$ authenticating..." : "$ execute login"}
               </Button>
             </form>
 
             <div className="text-center pt-4 border-t border-terminal-border">
               <p className="text-terminal-comment font-mono text-sm">
                 # Need an account?{" "}
-                <Link 
-                  to="/signup" 
+                <Link
+                  to="/signup"
                   className="text-primary hover:text-primary/80 underline"
                 >
                   ./signup.sh

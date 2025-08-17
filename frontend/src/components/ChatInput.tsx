@@ -23,9 +23,10 @@ export function ChatInput({ onSendMessage, placeholder = "Type a message..." }: 
     }
   };
 
-  return (
-    <div className="border-t border-terminal-border bg-terminal-bg p-4 font-mono">
+return (
+    <div className="border-t border-terminal-border bg-terminal-bg p-4 font-mono flex-shrink-0">
       <div className="flex items-center gap-2 text-terminal-text">
+        {/* prompt */}
         <div className="flex items-center gap-1 text-terminal-prompt text-sm flex-shrink-0">
           <Terminal className="h-4 w-4 text-terminal-keyword" />
           <span className="text-terminal-comment">user@codechatter</span>
@@ -33,7 +34,7 @@ export function ChatInput({ onSendMessage, placeholder = "Type a message..." }: 
           <span className="text-terminal-string">~</span>
           <span className="text-terminal-operator">$</span>
         </div>
-        
+
         <input
           value={message}
           onChange={(e) => setMessage(e.target.value)}
@@ -45,4 +46,5 @@ export function ChatInput({ onSendMessage, placeholder = "Type a message..." }: 
       </div>
     </div>
   );
+
 }

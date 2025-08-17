@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { ChatArea } from "@/components/ChatArea";
-import { ChatHeader } from "@/components/ChatHeader";
 
 interface Message {
   id: string;
@@ -59,8 +58,7 @@ export default function MainChat() {
   };
 
   return (
-    <div className="flex-1 flex flex-col h-screen bg-background">
-      <ChatHeader />
+    <div className="flex h-full min-h-0 max-h-[90vh] overflow-y-auto">
       <ChatArea
         messages={messages}
         onSendMessage={handleSendMessage}

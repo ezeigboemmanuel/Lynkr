@@ -12,9 +12,8 @@ export async function protectRoute(
     const token = req.cookies.token;
 
     if (!token) {
-      return res
-        .status(401)
-        .json({ message: "Unauthorised - No token provided" });
+      req.user = null; // just set null, don’t throw
+      return next();
     }
 
     // check if the token is valid

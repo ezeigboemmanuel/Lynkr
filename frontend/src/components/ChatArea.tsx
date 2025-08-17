@@ -16,7 +16,11 @@ interface ChatAreaProps {
   placeholder?: string;
 }
 
-export function ChatArea({ messages, onSendMessage, placeholder }: ChatAreaProps) {
+export function ChatArea({
+  messages,
+  onSendMessage,
+  placeholder,
+}: ChatAreaProps) {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const [shouldAutoScroll, setShouldAutoScroll] = useState(true);
 
@@ -37,39 +41,32 @@ export function ChatArea({ messages, onSendMessage, placeholder }: ChatAreaProps
   };
 
   return (
-    <div className="flex-1 flex flex-col h-full">
-      {/* Terminal Header */}
-      <div className="bg-muted p-2 border-b border-border">
+    <div className="flex flex-1 flex-col min-h-0">
+      {/* local header pinned */}
+      <div className="bg-muted p-2 border-b flex-shrink-0">
         <div className="text-terminal-comment text-xs font-mono">
           user@codechatter:~$ cat messages.log
         </div>
       </div>
 
-      {/* Messages Area */}
-      <div 
-        className="flex-1 overflow-y-auto" 
+      {/* scrollable messages */}
+      <div
+        className="flex-1 overflow-y-auto min-h-0"
         onScroll={handleScroll}
       >
         <div className="space-y-1">
-          {messages.map((message) => (
-            <ChatMessage
-              key={message.id}
-              id={message.id}
-              username={message.username}
-              message={message.message}
-              timestamp={message.timestamp}
-              isOwn={message.isOwn}
-            />
+          {messages.map((m) => (
+            <ChatMessage key={m.id} {...m} />
           ))}
           <div ref={messagesEndRef} />
         </div>
       </div>
 
-      {/* Chat Input */}
-      <ChatInput 
-        onSendMessage={onSendMessage}
-        placeholder={placeholder}
-      />
+      {/* pinned input */}
+      <div className="flex-shrink-0">
+        <ChatInput onSendMessage={onSendMessage} placeholder={placeholder} />
+      </div>
     </div>
   );
 }
+
